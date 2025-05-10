@@ -1,0 +1,35 @@
+require: rubocop-rails
+
+AllCops:
+  NewCops: enable
+  TargetRailsVersion: 8.0
+  Exclude:
+    - "db/**/*"
+    - "bin/**/*"
+
+Rails:
+  Enabled: true
+
+Style/MethodCallWithArgsParentheses:
+  EnforcedStyle: require_parentheses
+  Enabled: true
+
+Style/FrozenStringLiteralComment:
+  Enabled: false # Enforce frozen string literal comment
+
+Style/Documentation:
+  Enabled: false # Require documentation for classes and methods
+
+Metrics/MethodLength:
+  Enabled: false
+
+Metrics/BlockLength:
+  Enabled: false
+
+Style/StringLiterals:
+  Exclude:
+    - config/**/*
+    - spec/**/*
+
+Rails/SkipsModelValidations:
+  Enabled: false
