@@ -19,7 +19,7 @@ module API
     private
 
     def build_token_payload(user)
-      { id: user.id, email: user.email }
+      { user_id: user.id }
     end
   end
 end

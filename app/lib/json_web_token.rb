@@ -1,20 +1,24 @@
 class JsonWebToken
-  SECRET_KEY = Rails.application.credentials.secret_key_base
+  SECRET_KEY = Rails.application.credentials.jwt_secret
   EXPIRATION_HOURS = 24
+  ALGORITHM = 'HS256'.freeze
 
   def self.encode(payload, exp = EXPIRATION_HOURS.hours.from_now)
     payload[:exp] = exp.to_i
-    JWT.encode(payload, SECRET_KEY, 'HS512')
+    JWT.encode(payload, SECRET_KEY, ALGORITHM)
   end
 
   def self.decode(token)
     body = JWT.decode(token, SECRET_KEY)[0]
-    result = ActiveSupport::HashWithIndifferentAccess.new(body)
+    decoded = ActiveSupport::HashWithIndifferentAccess.new(body)
 
-    return nil if result[:exp].to_i < Time.current.to_i
+    return nil if decoded[:exp].to_i < Time.current.to_i
 
-    result
-  rescue StandardError
+    decoded
+  rescue JWT::DecodeError, JWT::ExpiredSignature
+    nil
+  rescue StandardError => e
+    Rails.logger.error(e.message)
     nil
   end
 end
