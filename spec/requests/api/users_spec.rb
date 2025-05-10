@@ -1,6 +1,27 @@
 require 'rails_helper'
 
 RSpec.describe('API::Users', type: :request) do
+  describe 'GET #index' do
+    let(:user) { create(:user) }
+    let(:payload) { { user_id: user.id } }
+    let(:token) { JsonWebToken.encode(payload) }
+    let(:headers) { { Authorization: token } }
+
+    it 'returns the current user serialized as JSON' do
+      get api_users_path, headers: headers
+
+      json_response = JSON.parse(response.body, symbolize_names: true)
+
+      expect(response).to(have_http_status(:ok))
+      expect(json_response[:user]).to(be_present)
+      expect(json_response[:user][:id]).to(be_present)
+      expect(json_response[:user][:email]).to(be_present)
+      expect(json_response[:user][:created_at]).to(be_present)
+      expect(json_response[:user][:updated_at]).to(be_present)
+      expect(json_response[:user][:total_games_played]).to(be_present)
+    end
+  end
+
   describe 'POST /api/user' do
     context 'with valid params' do
       let(:securepass) { Faker::Internet.password(min_length: 10, mix_case: true, special_characters: true) }
