@@ -41,6 +41,8 @@ gem 'amazing_print'
 
 gem 'faraday'
 
+gem 'jwt'
+
 group :development do
   gem 'chusaku', require: false
 end
