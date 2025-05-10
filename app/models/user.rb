@@ -2,18 +2,19 @@
 #
 # Table name: users
 #
-#  id              :bigint           not null, primary key
-#  email           :string           not null
-#  password_digest :string           not null
-#  created_at      :datetime         not null
-#  updated_at      :datetime         not null
+#  id                :bigint           not null, primary key
+#  email             :string           not null
+#  game_events_count :integer          default(0)
+#  password_digest   :string           not null
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
 #
 # Indexes
 #
 #  index_users_on_email  (email) UNIQUE
 #
 class User < ApplicationRecord
-  has_many :game_events, dependent: :destroy
+  has_many :game_events, counter_cache: true, dependent: :destroy
 
   has_secure_password
 
