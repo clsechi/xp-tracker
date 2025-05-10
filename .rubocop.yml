@@ -1,7 +1,8 @@
-require: rubocop-rails
+plugins: rubocop-rails
 
 AllCops:
   NewCops: enable
+  SuggestExtensions: false
   TargetRailsVersion: 8.0
   Exclude:
     - "db/**/*"
@@ -32,4 +33,7 @@ Style/StringLiterals:
     - spec/**/*
 
 Rails/SkipsModelValidations:
+  Enabled: false
+
+Rails/I18nLocaleTexts:
   Enabled: false
