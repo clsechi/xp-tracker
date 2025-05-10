@@ -12,5 +12,9 @@ Rails.application.routes.draw do
     resources :users, only: [:create], path: 'user'
 
     resources :sessions, only: [:create]
+
+    resource :user, only: [] do
+      resources :game_events, only: [:create]
+    end
   end
 end
