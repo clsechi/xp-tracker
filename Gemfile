@@ -68,7 +68,7 @@ group :development, :test do
 end
 
 group :test do
-  gem 'rspec-rails', '~> 7.0.0'
+  gem 'rspec-rails', '~> 8.0.0'
 
   gem 'ruby-lsp-rspec', require: false
 
