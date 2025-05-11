@@ -14,7 +14,7 @@
 #  index_users_on_email  (email) UNIQUE
 #
 class User < ApplicationRecord
-  has_many :game_events, counter_cache: true, dependent: :destroy
+  has_many :game_events, dependent: :destroy
 
   has_secure_password
 

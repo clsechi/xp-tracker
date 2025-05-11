@@ -21,7 +21,7 @@
 class GameEvent < ApplicationRecord
   self.inheritance_column = nil
 
-  belongs_to :user
+  belongs_to :user, counter_cache: true
 
   TYPES = %w[COMPLETED].freeze
 
