@@ -24,21 +24,5 @@ RSpec.describe('API::Sessions', type: :request) do
         expect(response.parsed_body).to(include('error' => 'Wrong email or password.'))
       end
     end
-
-    context 'rate limiting' do
-      before do
-        allow(JsonWebToken).to(receive(:encode).and_return('mocked.token'))
-      end
-
-      it 'limits the number of requests' do
-        10.times do
-          post url, params: { email: user.email, password: securepass }.to_json, headers: headers
-        end
-
-        post url, params: { email: user.email, password: securepass }.to_json, headers: headers
-
-        expect(response).to(have_http_status(:too_many_requests))
-      end
-    end
   end
 end

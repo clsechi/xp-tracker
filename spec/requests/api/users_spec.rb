@@ -1,6 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe('API::Users', type: :request) do
+  before do
+    allow_any_instance_of(BillingService).to(
+      receive(:subscription_status).and_return('active')
+    )
+  end
+
   describe 'GET #index' do
     let(:user) { create(:user) }
     let(:payload) { { user_id: user.id } }
@@ -19,6 +25,7 @@ RSpec.describe('API::Users', type: :request) do
       expect(json_response[:user][:created_at]).to(be_present)
       expect(json_response[:user][:updated_at]).to(be_present)
       expect(json_response[:user][:total_games_played]).to(be_present)
+      expect(json_response[:user][:subscription_status]).to(be_present)
     end
   end
 
