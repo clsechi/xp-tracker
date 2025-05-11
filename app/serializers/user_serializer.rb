@@ -34,7 +34,9 @@ class UserSerializer
 
   def stats
     {
-      total_games_played: user.game_events_count
+      stats: {
+        total_games_played: user.game_events_count
+      }
     }
   end
 

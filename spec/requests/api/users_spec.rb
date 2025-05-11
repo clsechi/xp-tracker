@@ -26,7 +26,7 @@ RSpec.describe('API::Users', type: :request) do
         expect(json_response[:user][:email]).to(be_present)
         expect(json_response[:user][:created_at]).to(be_present)
         expect(json_response[:user][:updated_at]).to(be_present)
-        expect(json_response[:user][:total_games_played]).to(be_present)
+        expect(json_response[:user][:stats][:total_games_played]).to(be_present)
         expect(json_response[:user][:subscription_status]).to(be_present)
       end
     end

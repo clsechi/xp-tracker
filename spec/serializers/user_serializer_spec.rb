@@ -19,7 +19,9 @@ RSpec.describe(UserSerializer, type: :serializer) do
         expected_json = {
           created_at: user.created_at.iso8601(3),
           email: user.email,
-          total_games_played: user.game_events_count,
+          stats: {
+            total_games_played: user.game_events_count
+          },
           id: user.id,
           subscription_status: 'active',
           updated_at: user.updated_at.iso8601(3)
@@ -36,7 +38,9 @@ RSpec.describe(UserSerializer, type: :serializer) do
         expected_json = {
           created_at: user.created_at.iso8601(3),
           email: user.email,
-          total_games_played: user.game_events_count,
+          stats: {
+            total_games_played: user.game_events_count
+          },
           id: user.id,
           subscription_status: 'expired',
           updated_at: user.updated_at.iso8601(3)
