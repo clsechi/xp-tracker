@@ -1,4 +1,3 @@
-# spec/adapters/billing_api_adapter_spec.rb
 require 'rails_helper'
 
 RSpec.describe(BillingAPIAdapter) do

@@ -1,4 +1,3 @@
-# spec/services/billing_service_spec.rb
 require 'rails_helper'
 
 RSpec.describe(BillingService) do
