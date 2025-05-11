@@ -19,12 +19,18 @@ class UserSerializer
   end
 
   def as_json(*)
-    user.as_json(except: %i[password_digest game_events_count]).merge(
-      stats
-    )
+    base_attributes
+      .merge(stats)
+      .merge(subscription_status)
   end
 
   private
+
+  attr_reader :user
+
+  def base_attributes
+    user.as_json(except: %i[password_digest game_events_count])
+  end
 
   def stats
     {
@@ -32,5 +38,9 @@ class UserSerializer
     }
   end
 
-  attr_reader :user
+  def subscription_status
+    {
+      subscription_status: user.subscription_status
+    }
+  end
 end

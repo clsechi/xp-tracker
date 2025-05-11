@@ -23,6 +23,10 @@ class User < ApplicationRecord
 
   normalizes :email, with: ->(e) { e.strip.downcase }
 
+  def subscription_status
+    BillingService.new.subscription_status(id)
+  end
+
   private
 
   def password_complexity
