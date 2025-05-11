@@ -50,5 +50,15 @@ RSpec.describe('GameEvents', type: :request) do
         )
       end
     end
+
+    describe 'with a invalid token' do
+      let(:token) { 'invalid' }
+
+      it 'returns unauthorized' do
+        get api_users_path, headers: headers
+
+        expect(response).to(have_http_status(:unauthorized))
+      end
+    end
   end
 end

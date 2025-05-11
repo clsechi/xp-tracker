@@ -10,22 +10,35 @@ RSpec.describe('API::Users', type: :request) do
   describe 'GET #index' do
     let(:user) { create(:user) }
     let(:payload) { { user_id: user.id } }
-    let(:token) { JsonWebToken.encode(payload) }
     let(:headers) { { Authorization: token } }
 
-    it 'returns the current user serialized as JSON' do
-      get api_users_path, headers: headers
+    describe 'with a valid token' do
+      let(:token) { JsonWebToken.encode(payload) }
 
-      json_response = JSON.parse(response.body, symbolize_names: true)
+      it 'returns the current user serialized as JSON' do
+        get api_users_path, headers: headers
 
-      expect(response).to(have_http_status(:ok))
-      expect(json_response[:user]).to(be_present)
-      expect(json_response[:user][:id]).to(be_present)
-      expect(json_response[:user][:email]).to(be_present)
-      expect(json_response[:user][:created_at]).to(be_present)
-      expect(json_response[:user][:updated_at]).to(be_present)
-      expect(json_response[:user][:total_games_played]).to(be_present)
-      expect(json_response[:user][:subscription_status]).to(be_present)
+        json_response = JSON.parse(response.body, symbolize_names: true)
+
+        expect(response).to(have_http_status(:ok))
+        expect(json_response[:user]).to(be_present)
+        expect(json_response[:user][:id]).to(be_present)
+        expect(json_response[:user][:email]).to(be_present)
+        expect(json_response[:user][:created_at]).to(be_present)
+        expect(json_response[:user][:updated_at]).to(be_present)
+        expect(json_response[:user][:total_games_played]).to(be_present)
+        expect(json_response[:user][:subscription_status]).to(be_present)
+      end
+    end
+
+    describe 'with a invalid token' do
+      let(:token) { 'invalid' }
+
+      it 'returns unauthorized' do
+        get api_users_path, headers: headers
+
+        expect(response).to(have_http_status(:unauthorized))
+      end
     end
   end
 
